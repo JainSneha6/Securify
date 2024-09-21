@@ -1,28 +1,32 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUserShield, FaMicrophoneAlt, FaEye, FaKey } from "react-icons/fa";  // Security-related icons
+import { FaUserShield, FaMicrophoneAlt, FaEye, FaKey, FaUserPlus } from "react-icons/fa";
 
 const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex flex-col justify-center items-center overflow-hidden">
-      {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black opacity-70"></div>
 
-      {/* Title Section with Key Icon */}
       <div className="relative z-10 text-center">
         <h1 className="text-6xl font-extrabold mb-4 animate-fade-in">
           Securify - Your Safety, Our Priority!
         </h1>
-        <FaKey className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 textwhite opacity-20" style={{fontSize:'700px', top:'160px'}}/>
+        <FaKey className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 textwhite opacity-20" style={{ fontSize: '700px', top: '160px' }} />
         <p className="text-lg animate-fade-in delay-200">
           Choose your biometric method to unlock the door
         </p>
       </div>
 
-      {/* Gradient Glassmorphism Cards with Icons */}
+      {/* Buttons Section */}
       <div className="flex space-x-8 z-10 mt-16">
+        <GlassCard
+          title="Create Profile"
+          gradient="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600"
+          Icon={FaUserPlus}
+          onClick={() => navigate("/create-profile")}
+        />
         <GlassCard
           title="Face Recognition"
           gradient="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600"
@@ -46,6 +50,7 @@ const LandingPage = () => {
   );
 };
 
+// GlassCard component remains unchanged
 const GlassCard = ({ title, gradient, Icon, onClick }) => {
   return (
     <div
