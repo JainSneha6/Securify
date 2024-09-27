@@ -39,12 +39,7 @@ const LandingPage = () => {
           Icon={FaMicrophoneAlt}
           onClick={() => navigate("/voice-recognition")}
         />
-        <GlassCard
-          title="Iris Recognition"
-          gradient="bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600"
-          Icon={FaEye}
-          onClick={() => navigate("/iris-recognition")}
-        />
+
       </div>
     </div>
   );

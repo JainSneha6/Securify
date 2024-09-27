@@ -207,9 +207,14 @@ def recognize_face():
 def record_voice():
     name = request.json['name']
     dataset_path = create_dataset_dir(name, 'voice')
+    print(dataset_path)
     for i in range(5):  # Record 5 samples
-        file_path = os.path.join(dataset_path, f"sample_{i+1}.wav")
+        print(dataset_path)
+        file_path = f"{dataset_path}/sample_{i+1}.wav"
+        file_path.replace(' ','')
+        print(file_path)
         record_audio(file_path)
+    train_voice(name)
     return jsonify({"message": f"Recorded 5 voice samples for {name}."})
 
 def record_audio(filename, duration=5, fs=16000):
@@ -217,10 +222,8 @@ def record_audio(filename, duration=5, fs=16000):
     sd.wait()
     sf.write(filename, audio_data, fs)
 
-# Route to train voice model and save embeddings
-@app.route('/train_voice', methods=['POST'])
-def train_voice():
-    name = request.json['name']
+
+def train_voice(name):
     dataset_path = f"voice_dataset/{name}"
     encoder = VoiceEncoder()
     embeddings = []
@@ -231,9 +234,12 @@ def train_voice():
             wav = preprocess_wav(Path(filepath))
             embedding = encoder.embed_utterance(wav)
             embeddings.append(embedding)
+
+    os.makedirs('voice_profiles', exist_ok=True)
+
     
     np.save(f'voice_profiles/{name}_embeddings.npy', embeddings)
-    return jsonify({"message": f"Voice embeddings for {name} saved."})
+    print({"message": f"Voice embeddings for {name} saved."})
 
 # Route to recognize voice
 @app.route('/recognize_voice', methods=['POST'])
@@ -253,7 +259,9 @@ def recognize_voice():
     test_embedding = encoder.embed_utterance(wav)
     
     similarity = cosine_similarity(np.mean(user_embedding, axis=0), test_embedding)
+    similarity = float(similarity)
     if similarity > 0.8:
+        print()
         return jsonify({"result": "Matched", "similarity": similarity})
     else:
         return jsonify({"result": "Not Matched", "similarity": similarity})
