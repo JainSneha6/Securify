@@ -13,6 +13,8 @@ from PIL import Image
 import io
 import base64
 import json
+import serial
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -21,11 +23,18 @@ CORS(app)
 emotion_dict_file = 'emotion_data.json'
 emotion_dict = {}
 
+serial_lock = threading.Lock()
+
+
 # Load emotion dictionary from the file (if exists)
 if os.path.exists(emotion_dict_file):
     with open(emotion_dict_file, 'r') as file:
         emotion_dict = json.load(file)
 
+def send_analog_input(value):
+    with serial_lock:
+        arduino.write(bytes(value, 'utf-8'))
+        time.sleep(0.05)
 
 # Utility function to create a dataset directory
 def create_dataset_dir(name, model_type='face'):
@@ -188,6 +197,7 @@ def recognize_face():
                 # Check if the face is recognized and the emotion matches the stored emotion
                 if confidence < 70 and detected_emotion == stored_emotion:
                     matched = True
+                    send_analog_input('1')
                     return jsonify({
                         "result": "Matched"
                         # "confidence": round(100 - confidence), 
@@ -261,7 +271,7 @@ def recognize_voice():
     similarity = cosine_similarity(np.mean(user_embedding, axis=0), test_embedding)
     similarity = float(similarity)
     if similarity > 0.8:
-        print()
+        send_analog_input('1')
         return jsonify({"result": "Matched", "similarity": similarity})
     else:
         return jsonify({"result": "Not Matched", "similarity": similarity})
@@ -269,5 +279,16 @@ def recognize_voice():
 def cosine_similarity(embedding1, embedding2):
     return np.dot(embedding1, embedding2) / (np.linalg.norm(embedding1) * np.linalg.norm(embedding2))
 
+def initialize_serial():
+    try:
+        return serial.Serial(port='COM5', baudrate=9600, timeout=0.1)
+    except serial.SerialException as e:
+        print(f"Error opening serial port: {e}")
+        return None
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    arduino = initialize_serial()
+    if arduino:
+        app.run(debug=True, use_reloader=False)
+    else:
+        print("Failed to initialize serial connection. Exiting.")

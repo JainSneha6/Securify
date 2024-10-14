@@ -49,7 +49,7 @@ const VoiceRecognition = () => {
 
       {/* Microphone Icon Container */}
       <div
-        className={`w-32 h-32 bg-gray-800 rounded-full flex justify-center items-center ${recording ? "animate-pulse" : ""
+        className={`mt-8 w-32 h-32 bg-gray-800 rounded-full flex justify-center items-center ${recording ? "animate-pulse" : ""
           }`}
         onClick={handleRecord}
       >

@@ -108,7 +108,12 @@ const FaceRecognition = () => {
       </select> */}
 
       {/* Webcam Feed */}
-      <video ref={videoRef} autoPlay playsInline className="w-64 h-64 rounded-full mb-4"></video>
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        className="w-64 h-64 rounded-full mb-4 object-cover"
+      />
 
       {/* Start Webcam Button */}
       <button
