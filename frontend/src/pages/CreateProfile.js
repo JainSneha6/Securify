@@ -15,20 +15,28 @@ const CreateProfile = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-gray-700 to-gray-900 text-white flex flex-col justify-center items-center p-4">
-            <h2 className="text-4xl font-bold mb-6">Create Profile</h2>
-            <div className="flex flex-col space-y-4">
+        <div className="min-h-screen bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white flex flex-col justify-center items-center p-12">
+            <div className="text-center">
+                <h2 className="text-7xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-100">
+                    CREATE YOUR PROFILE
+                </h2>
+                <p className="text-xl font-semibold mb-12 tracking-wider">
+                    Select your recognition method to start the journey!
+                </p>
+            </div>
+
+            <div className="flex flex-col space-y-6 w-full max-w-lg">
                 <button
                     onClick={handleFaceRecognition}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                    className="bg-gradient-to-br from-yellow-600 via-yellow-700 to-yellow-800 hover:scale-110 text-white font-semibold py-4 px-8 rounded-full shadow-2xl transform transition duration-300 ease-out hover:bg-yellow-600 hover:shadow-xl hover:ring-4 hover:ring-yellow-300 ring-offset-2"
                 >
-                    Create Face Recognition Model
+                    Face Recognition Model
                 </button>
                 <button
                     onClick={handleVoiceRecognition}
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                    className="bg-gradient-to-br from-yellow-500 via-yellow-600 to-yellow-700 hover:scale-110 text-white font-semibold py-4 px-8 rounded-full shadow-2xl transform transition duration-300 ease-out hover:bg-yellow-500 hover:shadow-xl hover:ring-4 hover:ring-yellow-300 ring-offset-2"
                 >
-                    Create Voice Recognition Model
+                    Voice Recognition Model
                 </button>
             </div>
         </div>

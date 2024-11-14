@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 
 const FaceRecognition = () => {
   const [personName, setPersonName] = useState(""); // User's name
-  const [chosenEmotion, setChosenEmotion] = useState(""); // Selected emotion
   const [recognitionResult, setRecognitionResult] = useState(null); // Recognition result
   const [capturing, setCapturing] = useState(false); // Capturing state
   const videoRef = useRef(null); // Reference to the video element
@@ -49,7 +48,7 @@ const FaceRecognition = () => {
   // Function to handle the API call to recognize face
   const handleRecognizeFace = async () => {
     if (!personName) {
-      alert("Please enter your name and choose an emotion");
+      alert("Please enter your name");
       return;
     }
 
@@ -80,9 +79,16 @@ const FaceRecognition = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-300 to-blue-600 text-white flex flex-col justify-center items-center p-4">
+    <div className="min-h-screen bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-white flex flex-col justify-center items-center p-12">
       {/* Title Section */}
-      <h2 className="text-4xl font-bold mb-6">Face Recognition</h2>
+      <div className="text-center -mt-8 mb-8">
+        <h2 className="text-7xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-100">
+          FACE RECOGNITION
+        </h2>
+        <p className="text-xl font-semibold m-1 tracking-wider">
+            Capture your face and start the recognition process.
+        </p>
+      </div>
 
       {/* Name Input */}
       <input
@@ -90,35 +96,21 @@ const FaceRecognition = () => {
         value={personName}
         onChange={(e) => setPersonName(e.target.value)}
         placeholder="Enter your name"
-        className="mb-4 p-2 rounded bg-gray-200 text-gray-800"
+        className="mb-6 p-4 rounded-lg bg-blue-200 text-blue-800 placeholder-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-400 ring-offset-2 w-full max-w-xs"
       />
-
-      {/* Emotion Dropdown */}
-      {/* <select
-        value={chosenEmotion}
-        onChange={(e) => setChosenEmotion(e.target.value)}
-        className="mb-4 p-2 rounded bg-gray-200 text-gray-800"
-      >
-        <option value="">Select Emotion</option>
-        <option value="happy">Happy</option>
-        <option value="sad">Sad</option>
-        <option value="angry">Angry</option>
-        <option value="neutral">Neutral</option>
-        <option value="surprised">Surprised</option>
-      </select> */}
 
       {/* Webcam Feed */}
       <video
         ref={videoRef}
         autoPlay
         playsInline
-        className="w-64 h-64 rounded-full mb-4 object-cover"
+        className="w-64 h-64 rounded-full mb-6 object-cover border-4 border-blue-300 shadow-xl"
       />
 
       {/* Start Webcam Button */}
       <button
         onClick={startWebcam}
-        className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded"
+        className="px-6 py-3 mb-6 bg-gradient-to-r from-blue-600 to-blue-700 hover:scale-105 text-white font-semibold rounded-full shadow-2xl transform transition duration-300 ease-out hover:bg-blue-600 hover:shadow-xl hover:ring-4 hover:ring-blue-300 ring-offset-2"
       >
         Start Webcam
       </button>
@@ -127,7 +119,7 @@ const FaceRecognition = () => {
       <button
         onClick={handleRecognizeFace}
         disabled={capturing}
-        className="mt-6 px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded"
+        className="px-6 py-3 mb-6 bg-gradient-to-r from-blue-600 to-blue-700 hover:scale-105 text-white font-semibold rounded-full shadow-2xl transform transition duration-300 ease-out hover:bg-blue-600 hover:shadow-xl hover:ring-4 hover:ring-blue-300 ring-offset-2"
       >
         {capturing ? "Capturing..." : "Recognize Face"}
       </button>
@@ -141,13 +133,9 @@ const FaceRecognition = () => {
           </p>
           {recognitionResult.result === "Matched" && (
             <>
-              {/* <p>Confidence: {recognitionResult.confidence}%</p>
-              <p>Detected Emotion: {recognitionResult.emotion}</p> */}
+              {/* Optional: Add confidence or emotion */}
             </>
           )}
-          {/* {recognitionResult.result === "Not Matched" && (
-            // <p>Detected Emotion: {recognitionResult.emotion}</p>
-          )} */}
         </div>
       )}
     </div>

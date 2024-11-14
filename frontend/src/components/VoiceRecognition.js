@@ -34,9 +34,15 @@ const VoiceRecognition = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-300 to-green-600 text-white flex flex-col justify-center items-center p-4">
+    <div className="min-h-screen bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white flex flex-col justify-center items-center p-12">
       {/* Title Section */}
-      <h2 className="text-4xl font-bold mb-6">Voice Recognition</h2>
+      <h2 className="text-7xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-200 to-green-100">
+        VOICE RECOGNITION
+      </h2>
+
+      <p className="text-xl font-semibold mb-12 tracking-wider">
+        Capture your voice and start the recognition process.
+      </p>
 
       {/* Input for user's name */}
       <input
@@ -44,20 +50,19 @@ const VoiceRecognition = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Enter your name"
-        className="p-2 rounded text-black"
+        className="mb-6 p-4 rounded-lg bg-green-200 text-green-800 placeholder-green-600 focus:outline-none focus:ring-4 focus:ring-green-400 ring-offset-2 w-full max-w-xs"
       />
 
       {/* Microphone Icon Container */}
       <div
-        className={`mt-8 w-32 h-32 bg-gray-800 rounded-full flex justify-center items-center ${recording ? "animate-pulse" : ""
-          }`}
+        className={`mt-8 w-32 h-32 bg-green-700 rounded-full flex justify-center items-center ${recording ? "animate-pulse" : ""}`}
         onClick={handleRecord}
       >
         <span className="text-4xl cursor-pointer">🎤</span>
       </div>
 
       {/* Instruction Text */}
-      <p className="mt-8 text-lg">Speak clearly to unlock the door</p>
+      <p className="mt-8 text-xl font-semibold">Speak clearly to unlock the door</p>
 
       {/* Recording Status */}
       {recording && <p className="mt-4">Recording... Please wait.</p>}
